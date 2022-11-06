@@ -15,7 +15,7 @@ const NewsBar = () => {
   return (
     <Box
       sx={{
-        position: 'absolute',
+        position: 'fixed',
         left: 0,
         bottom: 0,
         zIndex: 10,
