@@ -1,58 +1,63 @@
-import { createContext, FC, useContext, useReducer } from 'react';
-import { taskReducer } from '../utils';
-import { ITaskContextProvider, TaskContextType } from '../type';
+import { createContext, FC, useContext, useState } from 'react';
+import { IOlderTask, ITask, ITaskContextProvider, TaskContextType } from '../type';
 
 const initialState = {
   tasks: [],
-  dispatch: () => {},
-  olderTasks: [],
+  changeTodoDone: () => {},
+  otherTasks: [],
 };
 export const TaskContext = createContext<TaskContextType>(initialState);
 
 export const useTasks = () => useContext(TaskContext);
 
 const TaskContextProvider: FC<ITaskContextProvider> = ({ children }) => {
-  const [tasks, dispatch] = useReducer(taskReducer, [
+  const [tasks, setTasks] = useState<ITask[]>([
     {
+      id: 1,
       title: 'Visit David',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      isChecked: true,
+      isChecked: false,
       color: '#FF0000',
     },
     {
+      id: 2,
       title: 'Visit  Turpal',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      isChecked: true,
+      isChecked: false,
       color: '#366EFF',
     },
     {
+      id: 3,
       title: 'Visit  Hulk',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      isChecked: true,
+      isChecked: false,
       color: '#FFEB33',
     },
   ]);
 
-  const olderTasks = [
+  const [otherTasks, setOlderTasks] = useState<IOlderTask[]>([
     {
       title: 'Tomorrow Tasks',
       tasks: [
         {
+          id: 1,
           title: 'Visit David',
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          isChecked: true,
+          isChecked: false,
           color: '#FF0000',
         },
         {
+          id: 2,
           title: 'Visit  Turpal',
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          isChecked: true,
+          isChecked: false,
           color: '#366EFF',
         },
         {
+          id: 3,
           title: 'Visit  Hulk',
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          isChecked: true,
+          isChecked: false,
           color: '#FFEB33',
         },
       ],
@@ -61,18 +66,21 @@ const TaskContextProvider: FC<ITaskContextProvider> = ({ children }) => {
       title: '07/08/22 Tasks',
       tasks: [
         {
+          id: 1,
           title: 'Visit David',
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
           isChecked: true,
           color: '#FF0000',
         },
         {
+          id: 2,
           title: 'Visit  Turpal',
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
           isChecked: true,
           color: '#366EFF',
         },
         {
+          id: 3,
           title: 'Visit  Hulk',
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
           isChecked: true,
@@ -84,18 +92,21 @@ const TaskContextProvider: FC<ITaskContextProvider> = ({ children }) => {
       title: '07/08/22  Tasks',
       tasks: [
         {
+          id: 1,
           title: 'Visit David',
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
           isChecked: true,
           color: '#FF0000',
         },
         {
+          id: 2,
           title: 'Visit  Turpal',
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
           isChecked: true,
           color: '#366EFF',
         },
         {
+          id: 3,
           title: 'Visit  Hulk',
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
           isChecked: true,
@@ -103,10 +114,18 @@ const TaskContextProvider: FC<ITaskContextProvider> = ({ children }) => {
         },
       ],
     },
-  ];
+  ]);
+
+  const changeTodoDone = (id: number) => {
+    const changedTasks = tasks.map((task: ITask) => {
+      if (task.id === id) task.isChecked = !task.isChecked;
+      return task;
+    });
+    setTasks(changedTasks);
+  };
 
   return (
-    <TaskContext.Provider value={{ tasks, olderTasks, dispatch }}>
+    <TaskContext.Provider value={{ tasks, otherTasks, changeTodoDone }}>
       {children}
     </TaskContext.Provider>
   );

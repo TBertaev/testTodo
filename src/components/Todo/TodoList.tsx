@@ -7,7 +7,7 @@ import { useInterfaceContext } from '../../contexts/InterfaceContext';
 import TodoOlderTasks from './TodoOlderTasks';
 
 const TodoList = () => {
-  const { tasks, olderTasks } = useTasks();
+  const { tasks, otherTasks, changeTodoDone } = useTasks();
   const { showTodayTasks, setShowTodayTasks } = useInterfaceContext();
   return (
     <div>
@@ -43,10 +43,13 @@ const TodoList = () => {
               '16px 16px 20px rgba(0, 0, 0, 0.15), -8px -8px 20px rgba(255, 255, 255, 0.05)',
           }}
         >
-          <For each={tasks} render={(item) => <TodoItem {...item} />} />
+          <For
+            each={tasks}
+            render={(item) => <TodoItem {...item} changeTodoDone={changeTodoDone} />}
+          />
         </Box>
       </If>
-      <For each={olderTasks} render={(item) => <TodoOlderTasks {...item} />} />
+      <For each={otherTasks} render={(item) => <TodoOlderTasks {...item} />} />
     </div>
   );
 };

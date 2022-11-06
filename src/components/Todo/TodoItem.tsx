@@ -1,11 +1,23 @@
 import { Box } from '@mui/material';
 import { Switch } from '../Switch/Switch';
-import { FC, useState } from 'react';
-import { ITask } from '../../type';
+import { FC } from 'react';
+import { ITodoItem } from '../../type';
 import { TodoItemText, TodoItemTitle } from '../Typography';
 
-const TodoItem: FC<ITask> = ({ title, text, isChecked, color }) => {
-  const [checked, setChecked] = useState(true);
+const TodoItem: FC<ITodoItem> = ({
+  id,
+  title,
+  text,
+  isChecked,
+  color,
+  changeTodoDone,
+}) => {
+  const handleChange = () => {
+    if (changeTodoDone) {
+      changeTodoDone(id);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -29,7 +41,7 @@ const TodoItem: FC<ITask> = ({ title, text, isChecked, color }) => {
       <Box>
         <TodoItemTitle
           sx={{
-            textDecoration: checked ? 'line-through' : '',
+            textDecoration: isChecked ? 'line-through' : '',
           }}
         >
           {title}
@@ -40,8 +52,8 @@ const TodoItem: FC<ITask> = ({ title, text, isChecked, color }) => {
         sx={{
           marginLeft: 'auto',
         }}
-        onChange={() => setChecked((prevState) => !prevState)}
-        checked={checked}
+        onChange={handleChange}
+        checked={isChecked}
       />
     </Box>
   );

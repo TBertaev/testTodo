@@ -23,7 +23,9 @@ export const Switch = styled((props: SwitchProps) => (
       backgroundImage: `url('data:image/svg+xml;utf8,<svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="${encodeURIComponent(
         '#A9A9A9',
       )}" d="M14.3938 1.1937L6.47953 11.0892L0.262512 5.90778L1.43553 4.50016L6.2156 8.48293L12.9641 0.0500031L14.3938 1.1937Z" /></svg>')`,
-
+      ':hover': {
+        backgroundColor: '#fff',
+      },
       '& + .MuiSwitch-track': {
         backgroundColor: theme.palette.mode === 'dark' ? '#10C200' : '#366EFF',
         opacity: 1,

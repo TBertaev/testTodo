@@ -1,6 +1,7 @@
 import { Dispatch, ReactElement, ReactNode, SetStateAction } from 'react';
 
 export interface ITask {
+  id: number;
   title: string;
   text: string;
   isChecked: boolean;
@@ -25,8 +26,8 @@ export interface IInterfaceContextProvider {
 
 export type TaskContextType = {
   tasks: ITask[];
-  olderTasks: IOlderTask[];
-  dispatch: Dispatch<any>;
+  otherTasks: IOlderTask[];
+  changeTodoDone: (id: number) => void;
 };
 
 export type InterfaceContextType = {
@@ -36,6 +37,9 @@ export type InterfaceContextType = {
   setShowTodayTasks: Dispatch<SetStateAction<boolean>>;
 };
 
+export interface ITodoItem extends ITask {
+  changeTodoDone: (id: number) => void;
+}
 // Render Utils types
 export interface IFor {
   each: any;
